@@ -1,21 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import CartItems from "./pages/CartItems/CartItems";
+import ProductList from "./pages/ProductList/ProductList";
+import { StateProvider } from "./store";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-    </View>
+      <StateProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Productlist">
+            <Stack.Screen
+              name="Productlist"
+              component={ProductList}
+              options={{ title: "Product List" }}
+            />
+            <Stack.Screen
+              name="Cartitems"
+              component={CartItems}
+              options={{ title: "Cart List" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </StateProvider>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 });
